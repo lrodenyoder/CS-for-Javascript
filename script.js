@@ -33,14 +33,14 @@ const improvedBinarySearch = (arr, num, left, right) => {
     }
 };
 
-
-
-
-
 //set initial left and right values on first call
 console.log(improvedBinarySearch(data, 23, 0, data.length - 1));
 
-const {bubbleSort} = require('./sort');
+
+
+
+const {bubbleSort, quickSort} = require('./sort');
+const {mostDuplicates, optimizedDuplicates} = require('./dupes');
 const Benchmark = require('benchmark');
 
 const numbers = [];
@@ -49,12 +49,29 @@ for(let i = 0; i < 10000; i++){
     numbers.push(Math.floor(Math.random() * 10000) + 1);
 };
 
+
 const suite = new Benchmark.suite;
 
 suite
     .add('bubble sort', function(){
         const testArray = [...numbers];
         bubbleSort(testArray);
+    })
+    .add('quick sort', function(){
+        const testArray = [...numbers];
+        quickSort(testArray);
+    })
+    .add('js sort', function() {
+        const testArray = [...numbers];
+        testArray.sort((a, b) => {
+            return a - b;
+        });
+    })
+    .add('duplicates test', function(){
+        mostDuplicates(numbers);
+    })
+    .add('optomized duplicates', function(){
+        optimizedDuplicates(numbers);
     })
     .on('complete', function(){
         this.forEach(result => console.log(`${result.name} averaged ${result.stats.mean * 1000} milliseconds`));
@@ -63,7 +80,3 @@ suite
 
 
 
-const {quickSort} = require('./sort')
-const quickSortNumbers = [54, 8, 87, 88, 100, 98, 17, 72, 67, 42, 40, 34, 55, 18, 33, 94, 59, 68, 92, 2];
-
-console.log(quickSort(quickSortNumbers));
