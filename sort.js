@@ -24,6 +24,10 @@ const bubbleSort = (arr) => {
 
 //quick sort algorithm
 const quickSort  = (arr) => {
+    if(arr.length <= 1){
+        return arr;
+    }
+
     //use first index as pivot point
     const pivot = arr[0];
     const left = [];
@@ -40,7 +44,7 @@ const quickSort  = (arr) => {
     }
 
     //merge arrays and pivor together
-    return left.concat(pivot, right);
+    return quickSort(left).concat(pivot, right);
 };
 
 module.exports = {bubbleSort, quickSort};
